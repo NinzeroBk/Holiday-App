@@ -1,0 +1,158 @@
+package univ.stud.holiday.model.services.database;
+
+import univ.stud.holiday.model.HolidayRepository;
+import univ.stud.holiday.model.daos.*;
+import univ.stud.holiday.model.services.database.implementations.*;
+
+import java.sql.Connection;
+
+public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
+    /**
+     * DAOs
+     */
+    private AttractionDao attractionDao;
+    private LocationDao locationDao;
+    private ResourceDao resourceDao;
+    private VisitedDao visitedDao;
+    private CountryDao countryDao;
+    private ExpenseDao expenseDao;
+    private HolidayDao holidayDao;
+    private RegionDao regionDao;
+    private ReviewDao reviewDao;
+    private UserDao userDao;
+
+    private Connection connection;
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public MySqlDatabaseHoliday() {
+        // TODO: Setup connection to local / remote database.
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
+
+    @Override
+    public AttractionDao attractionDao() {
+        if (attractionDao == null) {
+            synchronized (this) {
+                if (attractionDao == null) {
+                    attractionDao = new AttractionImpl(this);
+                }
+            }
+        }
+        return attractionDao;
+    }
+
+    @Override
+    public ResourceDao resourceDao() {
+        if (resourceDao == null) {
+            synchronized (this) {
+                if (resourceDao == null) {
+                    resourceDao = new ResourceImpl(this);
+                }
+            }
+        }
+        return resourceDao;
+    }
+
+    @Override
+    public LocationDao locationDao() {
+        if (locationDao == null) {
+            synchronized (this) {
+                if (locationDao == null) {
+                    locationDao = new LocationImpl(this);
+                }
+            }
+        }
+        return locationDao;
+    }
+
+    @Override
+    public CountryDao countryDao() {
+        if (countryDao == null) {
+            synchronized (this) {
+                if (countryDao == null) {
+                    countryDao = new CountryImpl(this);
+                }
+            }
+        }
+        return countryDao;
+    }
+
+    @Override
+    public ExpenseDao expenseDao() {
+        if (expenseDao == null) {
+            synchronized (this) {
+                if (expenseDao == null) {
+                    expenseDao = new ExpenseImpl(this);
+                }
+            }
+        }
+        return expenseDao;
+    }
+
+    @Override
+    public HolidayDao holidayDao() {
+        if (holidayDao == null) {
+            synchronized (this) {
+                if (holidayDao == null) {
+                    holidayDao = new HolidayImpl(this);
+                }
+            }
+        }
+        return holidayDao;
+    }
+
+    @Override
+    public VisitedDao visitedDao() {
+        if (visitedDao == null) {
+            synchronized (this) {
+                if (visitedDao == null) {
+                    visitedDao = new VisitedImpl(this);
+                }
+            }
+        }
+        return visitedDao;
+    }
+
+    @Override
+    public RegionDao regionDao() {
+        if (regionDao == null) {
+            synchronized (this) {
+                if (regionDao == null) {
+                    regionDao = new RegionImpl(this);
+                }
+            }
+        }
+        return regionDao;
+    }
+
+    @Override
+    public ReviewDao reviewDao() {
+        if (reviewDao == null) {
+            synchronized (this) {
+                if (reviewDao == null) {
+                    reviewDao = new ReviewImpl(this);
+                }
+            }
+        }
+        return reviewDao;
+    }
+
+    @Override
+    public UserDao userDao() {
+        if (userDao == null) {
+            synchronized (this) {
+                if (userDao == null) {
+                    userDao = new UserImpl(this);
+                }
+            }
+        }
+        return userDao;
+    }
+}
