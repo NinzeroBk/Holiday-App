@@ -6,17 +6,17 @@ public class Attraction {
     public static final int NAME_MAX_LENGTH = 25;
     public static final int DESCRIPTION_MAX_LENGTH = 75;
 
-    private String description;
-    private int attractionId;
-    private double baseCost;
-    private int locationId;
-    private String name;
-    private int year;
+    private final String description;
+    private final int attractionId;
+    private final double baseCost;
+    private final int locationId;
+    private final String name;
+    private final int year;
 
     public Attraction(@NotNull String description, int attractionId, double baseCost, int locationId, @NotNull String name, int year) {
-        checkConstraint(description.length() > DESCRIPTION_MAX_LENGTH, "Attraction description is bigger than " + DESCRIPTION_MAX_LENGTH);
-        checkConstraint(name.length() > NAME_MAX_LENGTH, "Name cannot be bigger than " + NAME_MAX_LENGTH);
-        checkConstraint(baseCost < 0, "Base cost cannot be negative.");
+        Attraction.checkConstraint(description.length() > DESCRIPTION_MAX_LENGTH, "Attraction description is bigger than " + DESCRIPTION_MAX_LENGTH);
+        Attraction.checkConstraint(name.length() > NAME_MAX_LENGTH, "Name cannot be bigger than " + NAME_MAX_LENGTH);
+        Attraction.checkConstraint(baseCost < 0, "Base cost cannot be negative.");
         this.attractionId = attractionId;
         this.description = description;
         this.locationId = locationId;

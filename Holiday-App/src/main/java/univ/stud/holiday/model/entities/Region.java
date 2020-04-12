@@ -3,8 +3,8 @@ package univ.stud.holiday.model.entities;
 import org.jetbrains.annotations.NotNull;
 
 public class Region {
-    private int regionId;
-    private String name;
+    private final int regionId;
+    private final String name;
 
     public Region(int regionId, @NotNull String name) {
         this.regionId = regionId;

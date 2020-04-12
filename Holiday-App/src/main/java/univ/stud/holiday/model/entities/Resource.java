@@ -9,11 +9,11 @@ import java.time.LocalDateTime;
 public class Resource {
     public static final int TITLE_MAX_LENGTH = 25;
 
-    private int resourceId;
-    private int visitedId;
     private String title;
-    private String imageUrl;
-    private LocalDateTime timestamp;
+    private final int visitedId;
+    private final int resourceId;
+    private final String imageUrl;
+    private final LocalDateTime timestamp;
 
     public Resource(int resourceId, int visitedId, @NotNull String title, @NotNull String imageUrl, @NotNull LocalDateTime timestamp) {
         this.resourceId = resourceId;

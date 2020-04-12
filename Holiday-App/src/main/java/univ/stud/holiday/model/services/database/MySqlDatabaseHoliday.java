@@ -7,6 +7,7 @@ import univ.stud.holiday.model.services.database.implementations.*;
 import java.sql.Connection;
 
 public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
+
     /**
      * DAOs
      */
@@ -21,19 +22,8 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
     private ReviewDao reviewDao;
     private UserDao userDao;
 
-    private Connection connection;
-
-    public Connection getConnection() {
-        return connection;
-    }
-
     public MySqlDatabaseHoliday() {
-        // TODO: Setup connection to local / remote database.
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
+        // TODO: Setup connection to local database.
     }
 
     @Override

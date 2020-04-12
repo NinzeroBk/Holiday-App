@@ -20,7 +20,6 @@ public class AttractionImpl extends DatabaseImpl implements AttractionDao {
 
     @Override
     public void deleteElement(@NotNull Integer primaryKey) {
-
     }
 
     @Override

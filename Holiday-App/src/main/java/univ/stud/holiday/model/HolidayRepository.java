@@ -4,7 +4,8 @@ import univ.stud.holiday.model.daos.*;
 import univ.stud.holiday.model.services.database.MySqlDatabaseHoliday;
 
 public class HolidayRepository {
-    public interface HolidayAdapter {
+
+    public static interface HolidayAdapter {
         AttractionDao attractionDao();
 
         ResourceDao resourceDao();
@@ -26,11 +27,12 @@ public class HolidayRepository {
         UserDao userDao();
     }
 
-    private HolidayAdapter dataSource;
+    private final HolidayAdapter dataSource;
+
     private static HolidayRepository INSTANCE = null;
 
     private HolidayRepository() {
-        dataSource = new MySqlDatabaseHoliday();
+        this.dataSource = new MySqlDatabaseHoliday();
     }
 
     public static HolidayRepository getInstance() {

@@ -13,12 +13,12 @@ public class Pair<FirstKey, SecondKey> {
         return firstKey;
     }
 
-    public void setFirstKey(FirstKey firstKey) {
-        this.firstKey = firstKey;
-    }
-
     public SecondKey getSecondKey() {
         return secondKey;
+    }
+
+    public void setFirstKey(FirstKey firstKey) {
+        this.firstKey = firstKey;
     }
 
     public void setSecondKey(SecondKey secondKey) {

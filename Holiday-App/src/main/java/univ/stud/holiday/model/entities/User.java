@@ -6,11 +6,12 @@ public class User {
     public static final int PASSWORD_LOWER_BOUND = 6;
     public static final int PASSWORD_UPPER_BOUND = 20;
 
-    private String username;
+    private final String emailAddress;
+    private final String firstName;
+    private final String username;
+    private final String lastName;
     private String password;
     private String imageUrl;
-    private String emailAddress;
-    private String firstName, lastName;
 
     public User(@NotNull String username, @NotNull String password, String imageUrl, @NotNull String emailAddress, @NotNull String firstName, @NotNull String lastName) {
         this.emailAddress = emailAddress;

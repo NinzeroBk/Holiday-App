@@ -9,11 +9,11 @@ public class Review {
     public static final int TITLE_MAX_LENGTH = 25;
     public static final int CONTENT_MAX_LENGTH = 250;
 
-    private int reviewId;
-    private int visitedId;
     private String title;
     private String content;
-    private double rating;
+    private final int reviewId;
+    private final int visitedId;
+    private final double rating;
     private LocalDateTime timestamp;
 
     public Review(int reviewId, int visitedId, @NotNull String title, @NotNull String content, double rating, @NotNull LocalDateTime timestamp) {

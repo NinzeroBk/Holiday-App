@@ -5,9 +5,9 @@ import org.jetbrains.annotations.NotNull;
 public class Country {
     public static final int NAME_MAX_LENGTH = 60;
 
-    private int countryId;
-    private int regionId;
-    private String name;
+    private final int countryId;
+    private final int regionId;
+    private final String name;
 
     public Country(int countryId, int regionId, @NotNull String name) {
         if (name.length() > NAME_MAX_LENGTH) {

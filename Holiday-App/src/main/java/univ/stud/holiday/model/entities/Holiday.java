@@ -9,10 +9,10 @@ public class Holiday {
     public static final int TITLE_MAX_LENGTH = 25;
     public static final int DESCRIPTION_MAX_LENGTH = 100;
 
-    private int holidayId;
     private String title;
-    private String username;
     private String description;
+    private final int holidayId;
+    private final String username;
     private LocalDate startDate, endDate;
 
     public Holiday(int holidayId, @NotNull String title, @NotNull String username, String description, @NotNull LocalDate startDate, @NotNull LocalDate endDate) {

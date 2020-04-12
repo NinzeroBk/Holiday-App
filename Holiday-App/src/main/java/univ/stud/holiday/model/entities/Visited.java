@@ -6,7 +6,8 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class Visited {
-    private int holidayId, attractionId;
+    private final int holidayId;
+    private final int attractionId;
     private LocalDateTime startDate, endDate;
 
     public Visited(int holidayId, int attractionId, @NotNull LocalDateTime startDate, @NotNull LocalDateTime endDate) {
