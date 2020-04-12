@@ -4,6 +4,7 @@ package univ.stud.holiday.model.entities;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class Resource {
     public static final int TITLE_MAX_LENGTH = 25;
@@ -12,9 +13,9 @@ public class Resource {
     private int visitedId;
     private String title;
     private String imageUrl;
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
-    public Resource(int resourceId, int visitedId, @NotNull String title, @NotNull String imageUrl, @NotNull Date timestamp) {
+    public Resource(int resourceId, int visitedId, @NotNull String title, @NotNull String imageUrl, @NotNull LocalDateTime timestamp) {
         this.resourceId = resourceId;
         this.visitedId = visitedId;
         this.timestamp = timestamp;
@@ -23,7 +24,7 @@ public class Resource {
     }
 
     public Resource(int resourceId, int visitedId, String title, String imageUrl) {
-        this(resourceId, visitedId, title, imageUrl, new Date(System.currentTimeMillis()));
+        this(resourceId, visitedId, title, imageUrl, LocalDateTime.now());
     }
 
     public void setTitle(@NotNull String title) {
@@ -49,7 +50,7 @@ public class Resource {
         return imageUrl;
     }
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 

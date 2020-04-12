@@ -3,6 +3,7 @@ package univ.stud.holiday.model.entities;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class Review {
     public static final int TITLE_MAX_LENGTH = 25;
@@ -13,9 +14,9 @@ public class Review {
     private String title;
     private String content;
     private double rating;
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
-    public Review(int reviewId, int visitedId, @NotNull String title, @NotNull String content, double rating, @NotNull Date timestamp) {
+    public Review(int reviewId, int visitedId, @NotNull String title, @NotNull String content, double rating, @NotNull LocalDateTime timestamp) {
         this.timestamp = timestamp;
         this.visitedId = visitedId;
         this.reviewId = reviewId;
@@ -28,7 +29,7 @@ public class Review {
     }
 
     public Review(int reviewId, int visitedId, String title, String content, double rating) {
-        this(reviewId, visitedId, title, content, rating, new Date(System.currentTimeMillis()));
+        this(reviewId, visitedId, title, content, rating, LocalDateTime.now());
     }
 
     private static void checkRating(double rating) {
@@ -42,7 +43,7 @@ public class Review {
             throw new RuntimeException("Content cannot be bigger than " + CONTENT_MAX_LENGTH);
         }
         if (this.content != null) {
-            timestamp = new Date(System.currentTimeMillis());
+            timestamp = LocalDateTime.now();
         }
         this.content = content;
     }
@@ -52,7 +53,7 @@ public class Review {
             throw new RuntimeException("Title cannot be bigger than " + TITLE_MAX_LENGTH);
         }
         if (this.title != null) {
-            timestamp = new Date(System.currentTimeMillis());
+            timestamp = LocalDateTime.now();
         }
         this.title = title;
     }
@@ -77,7 +78,7 @@ public class Review {
         return rating;
     }
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 

@@ -3,6 +3,7 @@ package univ.stud.holiday.model.entities;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Holiday {
     public static final int TITLE_MAX_LENGTH = 25;
@@ -12,9 +13,9 @@ public class Holiday {
     private String title;
     private String username;
     private String description;
-    private Date startDate, endDate;
+    private LocalDate startDate, endDate;
 
-    public Holiday(int holidayId, @NotNull String title, @NotNull String username, String description, @NotNull Date startDate, @NotNull Date endDate) {
+    public Holiday(int holidayId, @NotNull String title, @NotNull String username, String description, @NotNull LocalDate startDate, @NotNull LocalDate endDate) {
         checkUsername(username);
         this.username = username;
         this.holidayId = holidayId;
@@ -25,7 +26,7 @@ public class Holiday {
     }
 
     public Holiday(int holidayId, String title, String username, String description) {
-        this(holidayId, title, username, description, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
+        this(holidayId, title, username, description, LocalDate.now(), LocalDate.now());
     }
 
     public void setTitle(@NotNull String title) {
@@ -42,15 +43,15 @@ public class Holiday {
         this.description = description;
     }
 
-    public void setStartDate(@NotNull Date startDate) {
-        if (endDate != null && startDate.after(endDate)) {
+    public void setStartDate(@NotNull LocalDate startDate) {
+        if (endDate != null && startDate.isAfter(endDate)) {
             throw new RuntimeException("Start date cannot take place after endDate.");
         }
         this.startDate = startDate;
     }
 
-    public void setEndDate(@NotNull Date endDate) {
-        if (startDate != null && endDate.before(startDate)) {
+    public void setEndDate(@NotNull LocalDate endDate) {
+        if (startDate != null && endDate.isBefore(startDate)) {
             throw new RuntimeException("End date cannot be before the start date.");
         }
         this.endDate = endDate;
@@ -78,11 +79,11 @@ public class Holiday {
         return description;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
