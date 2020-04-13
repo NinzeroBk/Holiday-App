@@ -2,9 +2,12 @@ package univ.stud.holiday.model.entities;
 
 import org.jetbrains.annotations.NotNull;
 
-public class User {
+import java.util.regex.Pattern;
+
+public final class User {
     public static final int PASSWORD_LOWER_BOUND = 6;
     public static final int PASSWORD_UPPER_BOUND = 20;
+    private static final Pattern emailPattern = Pattern.compile(".+@.+\\..+");
 
     private final String emailAddress;
     private final String firstName;
@@ -14,17 +17,32 @@ public class User {
     private String imageUrl;
 
     public User(@NotNull String username, @NotNull String password, String imageUrl, @NotNull String emailAddress, @NotNull String firstName, @NotNull String lastName) {
+        RuntimeException runtimeException = new RuntimeException();
+
+        try {
+            setPassword(password);
+        } catch (IllegalArgumentException illegalArgumentException) {
+            runtimeException.addSuppressed(illegalArgumentException);
+        }
+
+        if (!emailPattern.matcher(emailAddress).matches()) {
+            runtimeException.addSuppressed(new IllegalArgumentException("Invalid email address format."));
+        }
+
+        if (runtimeException.getSuppressed().length != 0) {
+            throw runtimeException;
+        }
+
         this.emailAddress = emailAddress;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.imageUrl = imageUrl;
-        setPassword(password);
     }
 
     public void setPassword(@NotNull String password) {
-        if (password.length() < PASSWORD_LOWER_BOUND || password.length() > PASSWORD_UPPER_BOUND) {
-            throw new RuntimeException("Password length must be between " + PASSWORD_LOWER_BOUND + " and " + PASSWORD_UPPER_BOUND + ".");
+        if (password.length() < User.PASSWORD_LOWER_BOUND || password.length() > User.PASSWORD_UPPER_BOUND) {
+            throw new IllegalArgumentException("Password length must be between " + User.PASSWORD_LOWER_BOUND + " and " + User.PASSWORD_UPPER_BOUND + ".");
         }
         this.password = password;
     }

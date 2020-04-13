@@ -4,8 +4,6 @@ import univ.stud.holiday.model.HolidayRepository;
 import univ.stud.holiday.model.daos.*;
 import univ.stud.holiday.model.services.database.implementations.*;
 
-import java.sql.Connection;
-
 public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
 
     /**
@@ -22,8 +20,16 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
     private ReviewDao reviewDao;
     private UserDao userDao;
 
+    private static final String USERNAME = "fusedbloxxer";
+
+    private static final String PASSWORD = "default_password";
+
+    private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
+
+    private static final String DATABASE_CONNECTION = "jdbc:mysql://localhost:3306/holiday_database";
+
     public MySqlDatabaseHoliday() {
-        // TODO: Setup connection to local database.
+        super();
     }
 
     @Override

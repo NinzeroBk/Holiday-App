@@ -1,12 +1,10 @@
 package univ.stud.holiday.model.entities;
 
-
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
-public class Resource {
+public final class Resource {
     public static final int TITLE_MAX_LENGTH = 25;
 
     private String title;
@@ -16,11 +14,11 @@ public class Resource {
     private final LocalDateTime timestamp;
 
     public Resource(int resourceId, int visitedId, @NotNull String title, @NotNull String imageUrl, @NotNull LocalDateTime timestamp) {
+        this.setTitle(title);
         this.resourceId = resourceId;
         this.visitedId = visitedId;
         this.timestamp = timestamp;
         this.imageUrl = imageUrl;
-        setTitle(title);
     }
 
     public Resource(int resourceId, int visitedId, String title, String imageUrl) {
@@ -29,7 +27,7 @@ public class Resource {
 
     public void setTitle(@NotNull String title) {
         if (title.length() > TITLE_MAX_LENGTH) {
-            throw new RuntimeException("Title cannot be bigger than " + TITLE_MAX_LENGTH);
+            throw new IllegalArgumentException("Title cannot have more than " + TITLE_MAX_LENGTH + " characters.");
         }
         this.title = title;
     }

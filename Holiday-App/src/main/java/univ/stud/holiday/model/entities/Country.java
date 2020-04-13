@@ -2,7 +2,7 @@ package univ.stud.holiday.model.entities;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Country {
+public final class Country {
     public static final int NAME_MAX_LENGTH = 60;
 
     private final int countryId;
@@ -11,7 +11,7 @@ public class Country {
 
     public Country(int countryId, int regionId, @NotNull String name) {
         if (name.length() > NAME_MAX_LENGTH) {
-            throw new RuntimeException("Name cannot be bigger than " + name);
+            throw new IllegalArgumentException("Name cannot be bigger than " + NAME_MAX_LENGTH + " characters.");
         }
         this.countryId = countryId;
         this.regionId = regionId;

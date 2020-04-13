@@ -2,10 +2,9 @@ package univ.stud.holiday.model.entities;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
-public class Visited {
+public final class Visited {
     private final int holidayId;
     private final int attractionId;
     private LocalDateTime startDate, endDate;
@@ -17,20 +16,20 @@ public class Visited {
         setEndDate(endDate);
     }
 
-    public Visited(int holidayId, int attractionId) {
+    public Visited(int holidayId, int attractionId) throws Exception {
         this(holidayId, attractionId, LocalDateTime.now(), LocalDateTime.now());
     }
 
     public void setStartDate(@NotNull LocalDateTime startDate) {
         if (endDate != null && startDate.isAfter(endDate)) {
-            throw new RuntimeException("Start date cannot take place after endDate.");
+            throw new IllegalArgumentException("Start date cannot take place after endDate.");
         }
         this.startDate = startDate;
     }
 
     public void setEndDate(@NotNull LocalDateTime endDate) {
         if (startDate != null && endDate.isBefore(startDate)) {
-            throw new RuntimeException("End date cannot be before the start date.");
+            throw new IllegalArgumentException("End date cannot be before the start date.");
         }
         this.endDate = endDate;
     }

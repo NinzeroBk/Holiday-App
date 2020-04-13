@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.Date;
 import java.time.LocalDate;
 
-public class Holiday {
+public final class Holiday {
     public static final int TITLE_MAX_LENGTH = 25;
     public static final int DESCRIPTION_MAX_LENGTH = 100;
 
@@ -16,13 +16,38 @@ public class Holiday {
     private LocalDate startDate, endDate;
 
     public Holiday(int holidayId, @NotNull String title, @NotNull String username, String description, @NotNull LocalDate startDate, @NotNull LocalDate endDate) {
-        checkUsername(username);
+        RuntimeException runtimeException = new RuntimeException();
+
+        try {
+            setDescription(description);
+        } catch (IllegalArgumentException illegalArgumentException) {
+            runtimeException.addSuppressed(illegalArgumentException);
+        }
+
+        try {
+            setStartDate(startDate);
+        } catch (IllegalArgumentException illegalArgumentException) {
+            runtimeException.addSuppressed(illegalArgumentException);
+        }
+
+        try {
+            setEndDate(endDate);
+        } catch (IllegalArgumentException illegalArgumentException) {
+            runtimeException.addSuppressed(illegalArgumentException);
+        }
+
+        try {
+            setTitle(title);
+        } catch (IllegalArgumentException illegalArgumentException) {
+            runtimeException.addSuppressed(illegalArgumentException);
+        }
+
+        if (runtimeException.getSuppressed().length != 0) {
+            throw runtimeException;
+        }
+
         this.username = username;
         this.holidayId = holidayId;
-        setDescription(description);
-        setStartDate(startDate);
-        setEndDate(endDate);
-        setTitle(title);
     }
 
     public Holiday(int holidayId, String title, String username, String description) {
@@ -31,36 +56,38 @@ public class Holiday {
 
     public void setTitle(@NotNull String title) {
         if (title.length() > TITLE_MAX_LENGTH) {
-            throw new RuntimeException("Title cannot be bigger than ");
+            throw new IllegalArgumentException("Title cannot be have more than " + TITLE_MAX_LENGTH + " characters.");
         }
         this.title = title;
     }
 
-    public void setDescription(String description) {
-        if (description != null && description.length() > DESCRIPTION_MAX_LENGTH) {
-            throw new RuntimeException("Description cannot be bigger than ");
+    public void setDescription(@NotNull String description) throws IllegalArgumentException {
+        if (description.length() > DESCRIPTION_MAX_LENGTH) {
+            throw new IllegalArgumentException("Description cannot have more than " + DESCRIPTION_MAX_LENGTH + " characters.");
         }
         this.description = description;
     }
 
     public void setStartDate(@NotNull LocalDate startDate) {
         if (endDate != null && startDate.isAfter(endDate)) {
-            throw new RuntimeException("Start date cannot take place after endDate.");
+            throw new IllegalArgumentException("Start date cannot take place after endDate.");
         }
         this.startDate = startDate;
     }
 
     public void setEndDate(@NotNull LocalDate endDate) {
         if (startDate != null && endDate.isBefore(startDate)) {
-            throw new RuntimeException("End date cannot be before the start date.");
+            throw new IllegalArgumentException("End date cannot be before the start date.");
         }
         this.endDate = endDate;
     }
 
-    private static void checkUsername(String username) {
-        if (username == null) {
-            throw new NullPointerException("Username cannot be null.");
+    public void setDates(@NotNull LocalDate startDate, @NotNull LocalDate endDate) {
+        if (startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("Start date cannot take place after endDate.");
         }
+        this.endDate = endDate;
+        this.startDate = startDate;
     }
 
     public int getHolidayId() {

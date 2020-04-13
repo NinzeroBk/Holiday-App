@@ -2,7 +2,7 @@ package univ.stud.holiday.model.entities;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Location {
+public final class Location {
     private final String city;
     private final int countryId;
     private final int locationId;

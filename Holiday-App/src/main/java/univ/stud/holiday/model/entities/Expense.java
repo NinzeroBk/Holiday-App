@@ -2,7 +2,7 @@ package univ.stud.holiday.model.entities;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Expense {
+public final class Expense {
     private final int expenseId;
     private final int visitedId;
     private final double price;
@@ -10,7 +10,7 @@ public class Expense {
 
     public Expense(int expenseId, int visitedId, double price, @NotNull String name) {
         if (price < 0) {
-            throw new RuntimeException("Price cannot be negative.");
+            throw new IllegalArgumentException("Price cannot be negative.");
         }
         this.expenseId = expenseId;
         this.visitedId = visitedId;
