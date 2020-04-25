@@ -28,6 +28,10 @@ public final class Attraction {
             runtimeException.addSuppressed(new IllegalArgumentException("Description length is bigger than " + DESCRIPTION_MAX_LENGTH + " characters."));
         }
 
+        if (year < 0) {
+            runtimeException.addSuppressed(new IllegalArgumentException("Year cannot be negative!"));
+        }
+
         if (runtimeException.getSuppressed().length != 0) {
             throw runtimeException;
         }

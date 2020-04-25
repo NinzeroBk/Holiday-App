@@ -15,7 +15,7 @@ public final class Review {
     private String content;
     private final int reviewId;
     private final int visitedId;
-    private LocalDateTime timestamp;
+    private final LocalDateTime timestamp;
 
     public Review(int reviewId, int visitedId, @NotNull String title, @NotNull String content, double rating, @NotNull LocalDateTime timestamp) {
         RuntimeException runtimeException = new RuntimeException();

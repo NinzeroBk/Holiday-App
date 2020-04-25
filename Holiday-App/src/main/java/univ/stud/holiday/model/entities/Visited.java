@@ -5,20 +5,30 @@ import org.jetbrains.annotations.NotNull;
 import java.time.LocalDateTime;
 
 public final class Visited {
+    private final int visitedId;
     private final int holidayId;
     private final int attractionId;
     private LocalDateTime startDate, endDate;
 
-    public Visited(int holidayId, int attractionId, @NotNull LocalDateTime startDate, @NotNull LocalDateTime endDate) {
+    public Visited(int visitedId, int holidayId, int attractionId, @NotNull LocalDateTime startDate, @NotNull LocalDateTime endDate) {
+        setDates(startDate, endDate);
+        this.visitedId=visitedId;
         this.attractionId = attractionId;
         this.holidayId = holidayId;
-        setStartDate(startDate);
-        setEndDate(endDate);
     }
 
-    public Visited(int holidayId, int attractionId) throws Exception {
-        this(holidayId, attractionId, LocalDateTime.now(), LocalDateTime.now());
+    public Visited(int visitedId, int holidayId, int attractionId) throws Exception {
+        this(visitedId, holidayId, attractionId, LocalDateTime.now(), LocalDateTime.now());
     }
+
+    public void setDates(@NotNull LocalDateTime startDate, @NotNull LocalDateTime endDate) {
+        if (startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("Start date cannot be after end date!");
+        }
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
 
     public void setStartDate(@NotNull LocalDateTime startDate) {
         if (endDate != null && startDate.isAfter(endDate)) {
@@ -32,6 +42,10 @@ public final class Visited {
             throw new IllegalArgumentException("End date cannot be before the start date.");
         }
         this.endDate = endDate;
+    }
+
+    public int getVisitedId() {
+        return visitedId;
     }
 
     public int getAttractionId() {
@@ -53,7 +67,8 @@ public final class Visited {
     @Override
     public String toString() {
         return "Visited{" +
-                "holidayId=" + holidayId +
+                "visitedId=" + visitedId +
+                ", holidayId=" + holidayId +
                 ", attractionId=" + attractionId +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +

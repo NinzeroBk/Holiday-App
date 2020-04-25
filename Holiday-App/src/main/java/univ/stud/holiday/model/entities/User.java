@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public final class User {
     public static final int PASSWORD_LOWER_BOUND = 6;
     public static final int PASSWORD_UPPER_BOUND = 20;
-    private static final Pattern emailPattern = Pattern.compile(".+@.+\\..+");
+    private static final Pattern emailPattern = Pattern.compile("^[^@]+@[^@]+\\.[^@]+$");
 
     private final String emailAddress;
     private final String firstName;

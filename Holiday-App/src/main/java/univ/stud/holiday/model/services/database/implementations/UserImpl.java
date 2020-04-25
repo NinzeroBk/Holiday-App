@@ -42,4 +42,9 @@ public class UserImpl extends DatabaseImpl implements UserDao {
     public boolean isValidUser(@NotNull String username) {
         return false;
     }
+
+    @Override
+    public double totalCost(@NotNull String username) {
+        return 0;
+    }
 }
