@@ -3,14 +3,22 @@ package univ.stud.holiday.model.services.database.implementations;
 import org.jetbrains.annotations.NotNull;
 import univ.stud.holiday.model.daos.CountryDao;
 import univ.stud.holiday.model.entities.Country;
-import univ.stud.holiday.model.services.database.MySqlDatabaseHoliday;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
-public class CountryImpl extends DatabaseImpl implements CountryDao {
+public class CountryImpl extends DatabaseImpl<Country> implements CountryDao {
 
-    public CountryImpl(@NotNull MySqlDatabaseHoliday mySqlDatabase) {
-        super(mySqlDatabase);
+
+    public CountryImpl(@NotNull Connection connection) {
+        super(connection);
+    }
+
+    @Override
+    Country fetchElement(ResultSet resultSet) throws SQLException {
+        return null;
     }
 
     @Override

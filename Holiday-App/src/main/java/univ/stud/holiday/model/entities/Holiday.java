@@ -2,7 +2,6 @@ package univ.stud.holiday.model.entities;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 public final class Holiday {
@@ -11,11 +10,11 @@ public final class Holiday {
 
     private String title;
     private String description;
-    private final int holidayId;
+    private int holidayId;
     private final String username;
     private LocalDate startDate, endDate;
 
-    public Holiday(int holidayId, @NotNull String title, @NotNull String username, String description, @NotNull LocalDate startDate, @NotNull LocalDate endDate) {
+    public Holiday(@NotNull String title, @NotNull String username, String description, @NotNull LocalDate startDate, @NotNull LocalDate endDate) {
         RuntimeException runtimeException = new RuntimeException();
 
         try {
@@ -47,11 +46,20 @@ public final class Holiday {
         }
 
         this.username = username;
-        this.holidayId = holidayId;
     }
+
 
     public Holiday(int holidayId, String title, String username, String description) {
         this(holidayId, title, username, description, LocalDate.now(), LocalDate.now());
+    }
+
+    public Holiday(int holidayId, String title, String username, String description, LocalDate startDate, LocalDate endDate) {
+        this(title, username, description, startDate, endDate);
+        this.holidayId = holidayId;
+    }
+
+    public Holiday(String title, String username, String description) {
+        this(title, username, description, LocalDate.now(), LocalDate.now());
     }
 
     public void setTitle(@NotNull String title) {

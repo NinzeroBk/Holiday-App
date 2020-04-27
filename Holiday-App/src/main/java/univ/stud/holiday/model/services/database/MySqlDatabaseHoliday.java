@@ -4,7 +4,11 @@ import univ.stud.holiday.model.HolidayRepository;
 import univ.stud.holiday.model.daos.*;
 import univ.stud.holiday.model.services.database.implementations.*;
 
-public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter, AutoCloseable{
 
     /**
      * DAOs
@@ -26,10 +30,25 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
 
     private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
 
-    private static final String DATABASE_CONNECTION = "jdbc:mysql://localhost:3306/holiday_database";
+    private static final String DATABASE_CONNECTION = "jdbc:mysql://localhost:3306/holiday";
+
+    private Connection connection;
 
     private MySqlDatabaseHoliday() {
         super();
+        try {
+            Class.forName(DATABASE_DRIVER);
+            System.out.println(" Connecting to database... ");
+            connection = DriverManager.getConnection(DATABASE_CONNECTION, USERNAME, PASSWORD);
+            System.out.println(" Connection is successful ");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void close() throws Exception {
     }
 
     private static class SingletonHelper {
@@ -45,7 +64,7 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
         if (attractionDao == null) {
             synchronized (this) {
                 if (attractionDao == null) {
-                    attractionDao = new AttractionImpl(this);
+                    attractionDao = new AttractionImpl(connection);
                 }
             }
         }
@@ -54,10 +73,10 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
 
     @Override
     public ResourceDao resourceDao() {
-        if (resourceDao == null) {
+            if (resourceDao == null) {
             synchronized (this) {
                 if (resourceDao == null) {
-                    resourceDao = new ResourceImpl(this);
+                    resourceDao = new ResourceImpl(connection);
                 }
             }
         }
@@ -69,7 +88,7 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
         if (locationDao == null) {
             synchronized (this) {
                 if (locationDao == null) {
-                    locationDao = new LocationImpl(this);
+                    locationDao = new LocationImpl(connection);
                 }
             }
         }
@@ -81,7 +100,7 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
         if (countryDao == null) {
             synchronized (this) {
                 if (countryDao == null) {
-                    countryDao = new CountryImpl(this);
+                    countryDao = new CountryImpl(connection);
                 }
             }
         }
@@ -93,7 +112,7 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
         if (expenseDao == null) {
             synchronized (this) {
                 if (expenseDao == null) {
-                    expenseDao = new ExpenseImpl(this);
+                    expenseDao = new ExpenseImpl(connection);
                 }
             }
         }
@@ -105,7 +124,7 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
         if (holidayDao == null) {
             synchronized (this) {
                 if (holidayDao == null) {
-                    holidayDao = new HolidayImpl(this);
+                    holidayDao = new HolidayImpl(connection);
                 }
             }
         }
@@ -117,7 +136,7 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
         if (visitedDao == null) {
             synchronized (this) {
                 if (visitedDao == null) {
-                    visitedDao = new VisitedImpl(this);
+                    visitedDao = new VisitedImpl(connection);
                 }
             }
         }
@@ -129,7 +148,7 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
         if (regionDao == null) {
             synchronized (this) {
                 if (regionDao == null) {
-                    regionDao = new RegionImpl(this);
+                    regionDao = new RegionImpl(connection);
                 }
             }
         }
@@ -141,7 +160,7 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
         if (reviewDao == null) {
             synchronized (this) {
                 if (reviewDao == null) {
-                    reviewDao = new ReviewImpl(this);
+                    reviewDao = new ReviewImpl(connection);
                 }
             }
         }
@@ -153,7 +172,7 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
         if (userDao == null) {
             synchronized (this) {
                 if (userDao == null) {
-                    userDao = new UserImpl(this);
+                    userDao = new UserImpl(connection);
                 }
             }
         }

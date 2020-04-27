@@ -1,16 +1,17 @@
 package univ.stud.holiday.core;
 
-import univ.stud.holiday.model.HolidayRepository;
-import univ.stud.holiday.model.entities.Attraction;
-
-import java.util.List;
+import univ.stud.holiday.model.entities.Holiday;
+import univ.stud.holiday.model.services.database.MySqlDatabaseHoliday;
 
 public class Main {
     public static void main(String[] args) {
-        List<Attraction> attractionList = HolidayRepository
+      MySqlDatabaseHoliday
                 .getInstance()
-                .getDataSource()
-                .attractionDao()
-                .getElements();
+                .holidayDao()
+                .createElement(new Holiday(
+                        "TitluTest",
+                        "TestUser",
+                        "JavaTestHoliday"
+                ));
     }
 }

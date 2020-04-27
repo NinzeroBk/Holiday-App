@@ -5,11 +5,15 @@ import univ.stud.holiday.model.services.database.MySqlDatabaseHoliday;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public abstract class DatabaseImpl {
-    protected MySqlDatabaseHoliday mySqlDatabase;
+public abstract class DatabaseImpl<T> {
+    protected Connection connection;
 
-    protected DatabaseImpl(@NotNull MySqlDatabaseHoliday mySqlDatabase) {
-        this.mySqlDatabase = mySqlDatabase;
+    protected DatabaseImpl(@NotNull Connection connection) {
+        this.connection = connection;
     }
+
+    abstract T fetchElement(ResultSet resultSet) throws SQLException;
 }

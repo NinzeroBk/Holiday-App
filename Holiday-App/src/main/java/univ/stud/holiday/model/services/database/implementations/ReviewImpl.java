@@ -3,14 +3,22 @@ package univ.stud.holiday.model.services.database.implementations;
 import org.jetbrains.annotations.NotNull;
 import univ.stud.holiday.model.daos.ReviewDao;
 import univ.stud.holiday.model.entities.Review;
-import univ.stud.holiday.model.services.database.MySqlDatabaseHoliday;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
-public class ReviewImpl extends DatabaseImpl implements ReviewDao {
+public class ReviewImpl extends DatabaseImpl<Review> implements ReviewDao {
 
-    public ReviewImpl(@NotNull MySqlDatabaseHoliday mySqlDatabase) {
-        super(mySqlDatabase);
+
+    public ReviewImpl(@NotNull Connection connection) {
+        super(connection);
+    }
+
+    @Override
+    Review fetchElement(ResultSet resultSet) throws SQLException {
+        return null;
     }
 
     @Override

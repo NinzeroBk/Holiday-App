@@ -3,14 +3,22 @@ package univ.stud.holiday.model.services.database.implementations;
 import org.jetbrains.annotations.NotNull;
 import univ.stud.holiday.model.daos.ExpenseDao;
 import univ.stud.holiday.model.entities.Expense;
-import univ.stud.holiday.model.services.database.MySqlDatabaseHoliday;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
-public class ExpenseImpl extends DatabaseImpl implements ExpenseDao {
+public class ExpenseImpl extends DatabaseImpl<Expense> implements ExpenseDao {
 
-    public ExpenseImpl(@NotNull MySqlDatabaseHoliday mySqlDatabase) {
-        super(mySqlDatabase);
+
+    public ExpenseImpl(@NotNull Connection connection) {
+        super(connection);
+    }
+
+    @Override
+    Expense fetchElement(ResultSet resultSet) throws SQLException {
+        return null;
     }
 
     @Override
