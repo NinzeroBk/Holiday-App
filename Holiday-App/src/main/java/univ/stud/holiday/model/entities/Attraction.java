@@ -7,13 +7,13 @@ public final class Attraction {
     private static final int DESCRIPTION_MAX_LENGTH = 75;
 
     private final String description;
-    private final int attractionId;
     private final double baseCost;
     private final int locationId;
     private final String name;
+    private int attractionId;
     private final int year;
 
-    public Attraction(@NotNull String description, int attractionId, double baseCost, int locationId, @NotNull String name, int year) {
+    public Attraction(@NotNull String description, double baseCost, int locationId, @NotNull String name, int year) {
         RuntimeException runtimeException = new RuntimeException();
 
         if (baseCost < 0) {
@@ -36,12 +36,16 @@ public final class Attraction {
             throw runtimeException;
         }
 
-        this.attractionId = attractionId;
         this.description = description;
         this.locationId = locationId;
         this.baseCost = baseCost;
         this.name = name;
         this.year = year;
+    }
+
+    public Attraction(int attractionId, String description, double baseCost, int locationId, String name, int year) {
+        this(description, baseCost, locationId, name, year);
+        this.attractionId = attractionId;
     }
 
     public int getAttractionId() {

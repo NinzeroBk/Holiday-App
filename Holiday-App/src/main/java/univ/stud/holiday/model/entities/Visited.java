@@ -5,20 +5,24 @@ import org.jetbrains.annotations.NotNull;
 import java.time.LocalDateTime;
 
 public final class Visited {
-    private final int visitedId;
+    private int visitedId;
     private final int holidayId;
     private final int attractionId;
     private LocalDateTime startDate, endDate;
 
-    public Visited(int visitedId, int holidayId, int attractionId, @NotNull LocalDateTime startDate, @NotNull LocalDateTime endDate) {
+    public Visited(int holidayId, int attractionId, @NotNull LocalDateTime startDate, @NotNull LocalDateTime endDate) {
         setDates(startDate, endDate);
-        this.visitedId=visitedId;
         this.attractionId = attractionId;
         this.holidayId = holidayId;
     }
 
-    public Visited(int visitedId, int holidayId, int attractionId) throws Exception {
-        this(visitedId, holidayId, attractionId, LocalDateTime.now(), LocalDateTime.now());
+    public Visited(int visitedId, int holidayId, int attractionId, LocalDateTime startDate, LocalDateTime endDate) {
+        this(holidayId, attractionId, startDate, endDate);
+        this.visitedId = visitedId;
+    }
+
+    public Visited(int holidayId, int attractionId) {
+        this(holidayId, attractionId, LocalDateTime.now(), LocalDateTime.now());
     }
 
     public void setDates(@NotNull LocalDateTime startDate, @NotNull LocalDateTime endDate) {

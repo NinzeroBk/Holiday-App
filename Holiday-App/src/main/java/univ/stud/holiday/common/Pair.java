@@ -1,6 +1,6 @@
 package univ.stud.holiday.common;
 
-public class Pair<FirstKey, SecondKey> {
+public final class Pair<FirstKey, SecondKey> {
     private FirstKey firstKey;
     private SecondKey secondKey;
 

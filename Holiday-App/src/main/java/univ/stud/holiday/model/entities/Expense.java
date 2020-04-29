@@ -3,19 +3,23 @@ package univ.stud.holiday.model.entities;
 import org.jetbrains.annotations.NotNull;
 
 public final class Expense {
-    private final int expenseId;
     private final int visitedId;
     private final double price;
     private final String name;
+    private int expenseId;
 
-    public Expense(int expenseId, int visitedId, double price, @NotNull String name) {
+    public Expense(int visitedId, double price, @NotNull String name) {
         if (price < 0) {
             throw new IllegalArgumentException("Price cannot be negative.");
         }
-        this.expenseId = expenseId;
         this.visitedId = visitedId;
         this.price = price;
         this.name = name;
+    }
+
+    public Expense(int expenseId, int visitedId, double price, String name) {
+        this(visitedId, price, name);
+        this.expenseId = expenseId;
     }
 
     public int getExpenseId() {

@@ -8,21 +8,30 @@ public final class Resource {
     public static final int TITLE_MAX_LENGTH = 25;
 
     private String title;
+    private int resourceId;
     private final int visitedId;
-    private final int resourceId;
     private final String imageUrl;
     private final LocalDateTime timestamp;
 
     public Resource(int resourceId, int visitedId, @NotNull String title, @NotNull String imageUrl, @NotNull LocalDateTime timestamp) {
-        this.setTitle(title);
+        this(visitedId, title, imageUrl, timestamp);
         this.resourceId = resourceId;
+    }
+
+    public Resource(int visitedId, @NotNull String title, @NotNull String imageUrl, @NotNull LocalDateTime timestamp) {
+        this.setTitle(title);
         this.visitedId = visitedId;
         this.timestamp = timestamp;
         this.imageUrl = imageUrl;
     }
 
     public Resource(int resourceId, int visitedId, String title, String imageUrl) {
-        this(resourceId, visitedId, title, imageUrl, LocalDateTime.now());
+        this(visitedId, title, imageUrl);
+        this.resourceId = resourceId;
+    }
+
+    public Resource(int visitedId, String title, String imageUrl) {
+        this(visitedId, title, imageUrl, LocalDateTime.now());
     }
 
     public void setTitle(@NotNull String title) {

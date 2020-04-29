@@ -2,8 +2,6 @@ package univ.stud.holiday.model.entities;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public final class Review {
@@ -13,11 +11,11 @@ public final class Review {
     private String title;
     private double rating;
     private String content;
-    private final int reviewId;
+    private int reviewId;
     private final int visitedId;
     private final LocalDateTime timestamp;
 
-    public Review(int reviewId, int visitedId, @NotNull String title, @NotNull String content, double rating, @NotNull LocalDateTime timestamp) {
+    public Review(int visitedId, @NotNull String title, @NotNull String content, double rating, @NotNull LocalDateTime timestamp) {
         RuntimeException runtimeException = new RuntimeException();
 
         try {
@@ -44,11 +42,19 @@ public final class Review {
 
         this.timestamp = timestamp;
         this.visitedId = visitedId;
+    }
+
+    public Review(int reviewId, int visitedId, String title, String content, double rating, LocalDateTime timestamp) {
+        this(visitedId, title, content, rating, timestamp);
         this.reviewId = reviewId;
     }
 
     public Review(int reviewId, int visitedId, String title, String content, double rating) {
         this(reviewId, visitedId, title, content, rating, LocalDateTime.now());
+    }
+
+    public Review(int visitedId, String title, String content, double rating) {
+        this(visitedId, title, content, rating, LocalDateTime.now());
     }
 
     public void setRating(double rating) {

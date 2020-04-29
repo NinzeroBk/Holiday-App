@@ -9,8 +9,8 @@ public final class Holiday {
     public static final int DESCRIPTION_MAX_LENGTH = 100;
 
     private String title;
-    private String description;
     private int holidayId;
+    private String description;
     private final String username;
     private LocalDate startDate, endDate;
 
@@ -69,8 +69,8 @@ public final class Holiday {
         this.title = title;
     }
 
-    public void setDescription(@NotNull String description) throws IllegalArgumentException {
-        if (description.length() > DESCRIPTION_MAX_LENGTH) {
+    public void setDescription(String description) throws IllegalArgumentException {
+        if (description != null && description.length() > DESCRIPTION_MAX_LENGTH) {
             throw new IllegalArgumentException("Description cannot have more than " + DESCRIPTION_MAX_LENGTH + " characters.");
         }
         this.description = description;

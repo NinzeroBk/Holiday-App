@@ -5,12 +5,13 @@ import univ.stud.holiday.model.daos.ExpenseDao;
 import univ.stud.holiday.model.entities.Expense;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExpenseImpl extends DatabaseImpl<Expense> implements ExpenseDao {
-
 
     public ExpenseImpl(@NotNull Connection connection) {
         super(connection);
@@ -18,31 +19,84 @@ public class ExpenseImpl extends DatabaseImpl<Expense> implements ExpenseDao {
 
     @Override
     Expense fetchElement(ResultSet resultSet) throws SQLException {
-        return null;
+        return new Expense(
+                resultSet.getInt("expenseId"),
+                resultSet.getInt("visitedId"),
+                resultSet.getDouble("price"),
+                resultSet.getString("name")
+        );
     }
 
     @Override
     public Expense readElement(@NotNull Integer primaryKey) {
+        String sql = "SELECT * FROM expenses WHERE expenseId = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, primaryKey);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return fetchElement(resultSet);
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public void deleteElement(@NotNull Integer primaryKey) {
-
+        String sql = "DELETE FROM expenses WHERE expenseId = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, primaryKey);
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
     public void updateElement(@NotNull Expense expense) {
-
+        String sql = "UPDATE expenses " +
+                "SET visitedId = ?," +
+                "price = ?," +
+                "name = ? " +
+                "WHERE expenseId = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, expense.getVisitedId());
+            preparedStatement.setDouble(2, expense.getPrice());
+            preparedStatement.setString(3, expense.getName());
+            preparedStatement.setInt(4, expense.getExpenseId());
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
     public void createElement(@NotNull Expense expense) {
-
+        String sql = "INSERT INTO expenses(visitedId, price, name) VALUES(?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, expense.getVisitedId());
+            preparedStatement.setDouble(2, expense.getPrice());
+            preparedStatement.setString(3, expense.getName());
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
     public List<Expense> getElements() {
-        return null;
+        String sql = "SELECT * FROM expenses";
+        List<Expense> expenses = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+                expenses.add(fetchElement(resultSet));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return expenses;
     }
 }
