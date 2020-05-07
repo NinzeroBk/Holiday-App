@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE>
 <html>
-<head>
+<head lang="en-US">
     <Title>Holiday-App</title>
 </head>
 <body>
@@ -9,25 +11,30 @@
 <form align="center" method="post" action="/holiday-app/user-login">
     <label for="username">Username:</label><br>
     <input type="text" id="username" name="username" value=
-            "<%
-                out.print(request.getAttribute("username") == null ? "" : request.getAttribute("username"));
+            "<%=
+            request.getAttribute("username") == null ? "" : request.getAttribute("username")
             %>"><br><br>
     <label for="password">Password:</label><br>
     <input type="password" id="password" name="password" value=
-            "<%
-                out.print(request.getAttribute("password") == null ? "" : request.getAttribute("password"));
+            "<%=
+            request.getAttribute("password") == null ? "" : request.getAttribute("password")
             %>"><br><br>
     <input type="submit" value="Login">
-    <input type="button" value="Create Account">
 </form>
-<p align="center">
-    <%
-        Object isLoginValid = request.getAttribute("isLoginValid");
-        if (isLoginValid != null && !(Boolean) isLoginValid) {
-            request.getAttribute("username");
-            out.print("Invalid username or password!");
-        }
+<form align="center" method="get" action="/holiday-app/user-create">
+    <input type="submit" value="Create Account">
+</form>
+<p align="center" style="color:red">
+    <%=
+    request.getAttribute("errorMessage") != null ? request.getAttribute("errorMessage") : ""
     %>
 </p>
+<%
+    String currentUser = (String) request.getAttribute("currentUser");
+    if (currentUser != null) {
+        session.setAttribute("currentUser", currentUser);
+        request.getRequestDispatcher("Holidays.jsp").forward(request, response);
+    }
+%>
 </body>
 </html>

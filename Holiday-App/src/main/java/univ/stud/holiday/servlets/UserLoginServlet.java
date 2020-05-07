@@ -22,18 +22,17 @@ public class UserLoginServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, String> userLoginMap = WebMapper.of(req.getReader().lines().collect(Collectors.joining()));
-
-        boolean isLoginValid = HolidayRepository
-                .isLoginValid(userLoginMap.get("username"), userLoginMap.get("password"));
-
-        if (isLoginValid) {
-            req.setAttribute("username", userLoginMap.get("username"));
-            req.getRequestDispatcher("Holidays.jsp").forward(req, resp);
-        } else {
-            req.setAttribute("isLoginValid", false);
-            req.setAttribute("username", userLoginMap.get("username"));
-            req.setAttribute("password", userLoginMap.get("password"));
-            req.getRequestDispatcher("UserLogin.jsp").forward(req, resp);
+        try {
+            boolean isLoginValid = HolidayRepository
+                    .isLoginValid(userLoginMap.get("username"), userLoginMap.get("password"));
+            if (!isLoginValid) {
+                throw new RuntimeException("Invalid username/password.");
+            }
+            req.setAttribute("currentUser", userLoginMap.get("username"));
+        } catch (Exception exception) {
+            userLoginMap.forEach(req::setAttribute);
+            req.setAttribute("errorMessage", exception.getMessage());
         }
+        req.getRequestDispatcher("UserLogin.jsp").forward(req, resp);
     }
 }

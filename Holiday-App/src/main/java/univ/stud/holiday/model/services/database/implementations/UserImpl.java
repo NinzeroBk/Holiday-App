@@ -125,7 +125,7 @@ public class UserImpl extends DatabaseImpl<User> implements UserDao {
     }
 
     @Override
-    public boolean isUserValid(@NotNull String username) {
+    public boolean userExists(@NotNull String username) {
         String sql = "SELECT count(username) " +
                 "from users " +
                 "where username like ?";
