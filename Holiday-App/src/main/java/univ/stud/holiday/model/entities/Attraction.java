@@ -73,6 +73,17 @@ public final class Attraction {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else if (!(o instanceof Attraction)) {
+            return false;
+        }
+        Attraction attraction = (Attraction) o;
+        return attractionId == attraction.attractionId;
+    }
+
+    @Override
     public String toString() {
         return "Attraction{" +
                 "attractionId=" + attractionId +

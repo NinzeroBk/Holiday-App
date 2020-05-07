@@ -137,6 +137,23 @@ public class HolidayImpl extends DatabaseImpl<Holiday> implements HolidayDao {
     }
 
     @Override
+    public List<Holiday> fetchHolidaysForUser(@NotNull String username) {
+        List<Holiday> holidays = new ArrayList<>();
+        String sql = "SELECT * FROM holidays WHERE username LIKE ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, username);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    holidays.add(fetchElement(resultSet));
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return holidays;
+    }
+
+    @Override
     public Holiday longestHoliday(@NotNull String username) {
         String sql = "SELECT holidays.* " +
                 "FROM users " +

@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter, AutoCloseable{
+public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter, AutoCloseable {
 
     /**
      * DAOs
@@ -30,9 +30,9 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter, A
 
     private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
 
-    private static final String DATABASE_CONNECTION = "jdbc:mysql://localhost:3306/holiday";
+    private static final String DATABASE_CONNECTION = "jdbc:mysql://localhost:3307/holiday";
 
-    private Connection connection;
+    private final Connection connection;
 
     private MySqlDatabaseHoliday() {
         super();
@@ -43,6 +43,7 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter, A
             System.out.println(" Connection is successful ");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Could not establish a connection to the database.");
         }
     }
 
@@ -73,7 +74,7 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter, A
 
     @Override
     public ResourceDao resourceDao() {
-            if (resourceDao == null) {
+        if (resourceDao == null) {
             synchronized (this) {
                 if (resourceDao == null) {
                     resourceDao = new ResourceImpl(connection);

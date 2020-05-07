@@ -108,7 +108,24 @@ public class UserImpl extends DatabaseImpl<User> implements UserDao {
     }
 
     @Override
-    public boolean isValidUser(@NotNull String username) {
+    public boolean isLoginValid(@NotNull String username, @NotNull String password) {
+        String sql = "SELECT COUNT(*) > 0 is_login_valid FROM users WHERE username LIKE ? AND password LIKE ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getBoolean("is_login_valid");
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isUserValid(@NotNull String username) {
         String sql = "SELECT count(username) " +
                 "from users " +
                 "where username like ?";

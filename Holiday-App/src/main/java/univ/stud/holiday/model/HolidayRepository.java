@@ -1,9 +1,13 @@
 package univ.stud.holiday.model;
 
 import univ.stud.holiday.model.daos.*;
+import univ.stud.holiday.model.entities.Holiday;
+import univ.stud.holiday.model.entities.User;
 import univ.stud.holiday.model.services.database.MySqlDatabaseHoliday;
 
-public class HolidayRepository {
+import java.util.List;
+
+public final class HolidayRepository {
 
     public interface HolidayAdapter {
         AttractionDao attractionDao();
@@ -27,26 +31,23 @@ public class HolidayRepository {
         UserDao userDao();
     }
 
-    private final HolidayAdapter dataSource;
-
-    private static HolidayRepository INSTANCE = null;
-
     private HolidayRepository() {
-        this.dataSource = MySqlDatabaseHoliday.getInstance();
+        throw new AssertionError();
     }
 
-    public static HolidayRepository getInstance() {
-        if (INSTANCE == null) {
-            synchronized (HolidayRepository.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new HolidayRepository();
-                }
-            }
-        }
-        return INSTANCE;
+    public static boolean isUserValid(String username) {
+        return MySqlDatabaseHoliday.getInstance().userDao().isUserValid(username);
     }
 
-    public HolidayAdapter getDataSource() {
-        return dataSource;
+    public static boolean isLoginValid(String username, String password) {
+        return MySqlDatabaseHoliday.getInstance().userDao().isLoginValid(username, password);
+    }
+
+    public static User fetchUser(String username) {
+        return MySqlDatabaseHoliday.getInstance().userDao().readElement(username);
+    }
+
+    public static List<Holiday> fetchHolidaysForUser(String username) {
+        return MySqlDatabaseHoliday.getInstance().holidayDao().fetchHolidaysForUser(username);
     }
 }

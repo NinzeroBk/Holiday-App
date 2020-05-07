@@ -4,8 +4,12 @@ import org.jetbrains.annotations.NotNull;
 import univ.stud.holiday.common.Pair;
 import univ.stud.holiday.model.entities.Holiday;
 
+import java.util.List;
+
 public interface HolidayDao extends BaseDao<Holiday, Integer> {
     Pair<Holiday, Double> mostExpensiveHoliday(@NotNull String username);
+
+    List<Holiday> fetchHolidaysForUser(@NotNull String username);
 
     Holiday longestHoliday(@NotNull String username);
 }
