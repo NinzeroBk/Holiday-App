@@ -44,18 +44,20 @@ public class ReviewImpl extends DatabaseImpl<Review> implements ReviewDao {
     }
 
     @Override
-    public void deleteElement(@NotNull Integer primaryKey) {
+    public boolean deleteElement(@NotNull Integer primaryKey) {
         String sql = "DELETE FROM reviews WHERE reviewId = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, primaryKey);
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void updateElement(@NotNull Review review) {
+    public boolean updateElement(@NotNull Review review) {
         String sql = "UPDATE reviews " +
                 "SET visitedId = ?," +
                 "title = ?," +
@@ -69,15 +71,17 @@ public class ReviewImpl extends DatabaseImpl<Review> implements ReviewDao {
             preparedStatement.setString(3, review.getContent());
             preparedStatement.setDouble(4, review.getRating());
             preparedStatement.setTimestamp(5, Timestamp.valueOf(review.getTimestamp()));
-            preparedStatement.setInt(6, review.getReviewId());
+            preparedStatement.setInt(6, review.getId());
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void createElement(@NotNull Review review) {
+    public boolean createElement(@NotNull Review review) {
         String sql = "INSERT INTO reviews(visitedId, title, content, rating, timestamp) VALUES(?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, review.getVisitedId());
@@ -86,8 +90,10 @@ public class ReviewImpl extends DatabaseImpl<Review> implements ReviewDao {
             preparedStatement.setDouble(4, review.getRating());
             preparedStatement.setTimestamp(5, Timestamp.valueOf(review.getTimestamp()));
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
@@ -99,6 +105,23 @@ public class ReviewImpl extends DatabaseImpl<Review> implements ReviewDao {
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 reviews.add(fetchElement(resultSet));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return reviews;
+    }
+
+    @Override
+    public List<Review> fetchReviewsForVisit(int visitedId) {
+        List<Review> reviews = new ArrayList<>();
+        String sql = "SELECT * FROM reviews WHERE visitedId = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, visitedId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    reviews.add(fetchElement(resultSet));
+                }
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

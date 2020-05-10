@@ -43,18 +43,20 @@ public class ResourceImpl extends DatabaseImpl<Resource> implements ResourceDao 
     }
 
     @Override
-    public void deleteElement(@NotNull Integer primaryKey) {
+    public boolean deleteElement(@NotNull Integer primaryKey) {
         String sql = "DELETE FROM resources WHERE resourceId = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, primaryKey);
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void updateElement(@NotNull Resource resource) {
+    public boolean updateElement(@NotNull Resource resource) {
         String sql = "UPDATE resources " +
                 "SET visitedId = ?," +
                 "title = ?," +
@@ -66,15 +68,17 @@ public class ResourceImpl extends DatabaseImpl<Resource> implements ResourceDao 
             preparedStatement.setString(2, resource.getTitle());
             preparedStatement.setString(3, resource.getImageUrl());
             preparedStatement.setTimestamp(4, Timestamp.valueOf(resource.getTimestamp()));
-            preparedStatement.setInt(5, resource.getResourceId());
+            preparedStatement.setInt(5, resource.getId());
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void createElement(@NotNull Resource resource) {
+    public boolean createElement(@NotNull Resource resource) {
         String sql = "INSERT INTO resources(visitedId, title, imageUrl, timestamp) VALUES(?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, resource.getVisitedId());
@@ -82,8 +86,10 @@ public class ResourceImpl extends DatabaseImpl<Resource> implements ResourceDao 
             preparedStatement.setString(3, resource.getImageUrl());
             preparedStatement.setTimestamp(4, Timestamp.valueOf(resource.getTimestamp()));
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
@@ -95,6 +101,23 @@ public class ResourceImpl extends DatabaseImpl<Resource> implements ResourceDao 
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 resources.add(fetchElement(resultSet));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return resources;
+    }
+
+    @Override
+    public List<Resource> fetchResourcesForVisit(int visitedId) {
+        List<Resource> resources = new ArrayList<>();
+        String sql = "SELECT * FROM resources WHERE visitedId = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, visitedId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    resources.add(fetchElement(resultSet));
+                }
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

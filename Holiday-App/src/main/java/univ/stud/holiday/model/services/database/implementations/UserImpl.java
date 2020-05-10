@@ -43,18 +43,20 @@ public class UserImpl extends DatabaseImpl<User> implements UserDao {
     }
 
     @Override
-    public void deleteElement(@NotNull String primaryKey) {
+    public boolean deleteElement(@NotNull String primaryKey) {
         String sql = "DELETE FROM users WHERE username like ? ";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, primaryKey);
             preparedStatement.execute();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void updateElement(@NotNull User user) {
+    public boolean updateElement(@NotNull User user) {
         String sql = "UPDATE users " +
                 "SET password = ?," +
                 "imageUrl = ?," +
@@ -68,27 +70,31 @@ public class UserImpl extends DatabaseImpl<User> implements UserDao {
             preparedStatement.setString(3, user.getEmailAddress());
             preparedStatement.setString(4, user.getFirstName());
             preparedStatement.setString(5, user.getLastName());
-            preparedStatement.setString(6, user.getUsername());
+            preparedStatement.setString(6, user.getId());
             preparedStatement.execute();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void createElement(@NotNull User user) {
+    public boolean createElement(@NotNull User user) {
         String sql = "INSERT INTO users(username, password, imageUrl, emailAddress, firstName, lastName) " +
                 "VALUES(?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(1, user.getId());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getImageUrl());
             preparedStatement.setString(4, user.getEmailAddress());
             preparedStatement.setString(5, user.getFirstName());
             preparedStatement.setString(6, user.getLastName());
             preparedStatement.execute();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 

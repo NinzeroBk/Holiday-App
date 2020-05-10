@@ -46,18 +46,20 @@ public class LocationImpl extends DatabaseImpl<Location> implements LocationDao 
     }
 
     @Override
-    public void deleteElement(@NotNull Integer primaryKey) {
+    public boolean deleteElement(@NotNull Integer primaryKey) {
         String sql = "DELETE FROM locations WHERE locationId = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, primaryKey);
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void updateElement(@NotNull Location location) {
+    public boolean updateElement(@NotNull Location location) {
         String sql = "UPDATE locations " +
                 "SET countryId = ?," +
                 "streetAddress = ?," +
@@ -69,15 +71,17 @@ public class LocationImpl extends DatabaseImpl<Location> implements LocationDao 
             preparedStatement.setString(2, location.getStreetAddress());
             preparedStatement.setString(3, location.getCity());
             preparedStatement.setString(4, location.getStateProvince());
-            preparedStatement.setInt(5, location.getLocationId());
+            preparedStatement.setInt(5, location.getId());
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void createElement(@NotNull Location location) {
+    public boolean createElement(@NotNull Location location) {
         String sql = "INSERT INTO locations(countryId, streetAddress, city, stateProvince) VALUES(?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, location.getCountryId());
@@ -85,8 +89,10 @@ public class LocationImpl extends DatabaseImpl<Location> implements LocationDao 
             preparedStatement.setString(3, location.getCity());
             preparedStatement.setString(4, location.getStateProvince());
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 

@@ -1,0 +1,41 @@
+head {
+    language: en-US;
+}
+
+body {
+    text-align: center;
+}
+
+p.error {
+    color: red;
+}
+
+img.avatar {
+    max-width: 40vw;
+    max-height: 40vw;
+    height: auto;
+    width: auto;
+}
+
+fieldset {
+    background-color: aquamarine;
+}
+
+legend {
+    font-size: 2vw;
+    font-weight: bold;
+    font-family: sans-serif;
+    padding: 1vw;
+}
+
+tr, th, table, td, #baseTable {
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 1.5vw;
+    margin: 10px;
+    padding: 10px;
+}
+
+#baseTable {
+    width: 100%;
+}

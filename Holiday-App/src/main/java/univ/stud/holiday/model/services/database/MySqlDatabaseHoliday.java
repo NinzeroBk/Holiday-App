@@ -30,7 +30,7 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter, A
 
     private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
 
-    private static final String DATABASE_CONNECTION = "jdbc:mysql://localhost:3307/holiday";
+    private static final String DATABASE_CONNECTION = "jdbc:mysql://localhost:3306/holiday";
 
     private final Connection connection;
 

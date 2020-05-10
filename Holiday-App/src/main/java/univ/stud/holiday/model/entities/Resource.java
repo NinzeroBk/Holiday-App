@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 
-public final class Resource {
+public final class Resource implements Entity<Integer> {
     public static final int TITLE_MAX_LENGTH = 25;
 
     private String title;
@@ -41,7 +41,7 @@ public final class Resource {
         this.title = title;
     }
 
-    public int getResourceId() {
+    public Integer getId() {
         return resourceId;
     }
 

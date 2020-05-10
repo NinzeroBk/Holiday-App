@@ -44,18 +44,20 @@ public class ExpenseImpl extends DatabaseImpl<Expense> implements ExpenseDao {
     }
 
     @Override
-    public void deleteElement(@NotNull Integer primaryKey) {
+    public boolean deleteElement(@NotNull Integer primaryKey) {
         String sql = "DELETE FROM expenses WHERE expenseId = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, primaryKey);
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void updateElement(@NotNull Expense expense) {
+    public boolean updateElement(@NotNull Expense expense) {
         String sql = "UPDATE expenses " +
                 "SET visitedId = ?," +
                 "price = ?," +
@@ -65,23 +67,27 @@ public class ExpenseImpl extends DatabaseImpl<Expense> implements ExpenseDao {
             preparedStatement.setInt(1, expense.getVisitedId());
             preparedStatement.setDouble(2, expense.getPrice());
             preparedStatement.setString(3, expense.getName());
-            preparedStatement.setInt(4, expense.getExpenseId());
+            preparedStatement.setInt(4, expense.getId());
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void createElement(@NotNull Expense expense) {
+    public boolean createElement(@NotNull Expense expense) {
         String sql = "INSERT INTO expenses(visitedId, price, name) VALUES(?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, expense.getVisitedId());
             preparedStatement.setDouble(2, expense.getPrice());
             preparedStatement.setString(3, expense.getName());
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
@@ -93,6 +99,23 @@ public class ExpenseImpl extends DatabaseImpl<Expense> implements ExpenseDao {
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 expenses.add(fetchElement(resultSet));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return expenses;
+    }
+
+    @Override
+    public List<Expense> fetchExpensesForVisit(int visitedId) {
+        List<Expense> expenses = new ArrayList<>();
+        String sql = "SELECT * FROM expenses WHERE visitedId = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, visitedId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    expenses.add(fetchElement(resultSet));
+                }
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

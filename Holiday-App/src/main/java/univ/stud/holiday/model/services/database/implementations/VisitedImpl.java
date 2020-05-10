@@ -42,19 +42,21 @@ public class VisitedImpl extends DatabaseImpl<Visited> implements VisitedDao {
     }
 
     @Override
-    public void deleteElement(@NotNull Integer primaryKey) {
+    public boolean deleteElement(@NotNull Integer primaryKey) {
         String sql = "DELETE FROM visited " +
                 "WHERE visitedId = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, primaryKey);
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void updateElement(@NotNull Visited visited) {
+    public boolean updateElement(@NotNull Visited visited) {
         String sql = "UPDATE visited " +
                 "SET holidayId = ?," +
                 "attractionId = ?," +
@@ -66,15 +68,17 @@ public class VisitedImpl extends DatabaseImpl<Visited> implements VisitedDao {
             preparedStatement.setInt(2, visited.getAttractionId());
             preparedStatement.setTimestamp(3, Timestamp.valueOf(visited.getStartDate()));
             preparedStatement.setTimestamp(4, Timestamp.valueOf(visited.getEndDate()));
-            preparedStatement.setInt(5, visited.getVisitedId());
+            preparedStatement.setInt(5, visited.getId());
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void createElement(@NotNull Visited visited) {
+    public boolean createElement(@NotNull Visited visited) {
         String sql = "INSERT INTO visited(holidayId, attractionId, startDate, endDate) VALUES(?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, visited.getHolidayId());
@@ -82,8 +86,10 @@ public class VisitedImpl extends DatabaseImpl<Visited> implements VisitedDao {
             preparedStatement.setTimestamp(3, Timestamp.valueOf(visited.getStartDate()));
             preparedStatement.setTimestamp(4, Timestamp.valueOf(visited.getEndDate()));
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
@@ -95,6 +101,23 @@ public class VisitedImpl extends DatabaseImpl<Visited> implements VisitedDao {
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 visits.add(fetchElement(resultSet));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return visits;
+    }
+
+    @Override
+    public List<Visited> fetchVisitsForHoliday(int holidayId) {
+        List<Visited> visits = new ArrayList<>();
+        String sql = "SELECT * FROM visited WHERE holidayId = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, holidayId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    visits.add(fetchElement(resultSet));
+                }
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 
-public final class Visited {
+public final class Visited implements Entity<Integer> {
     private int visitedId;
     private final int holidayId;
     private final int attractionId;
@@ -48,7 +48,7 @@ public final class Visited {
         this.endDate = endDate;
     }
 
-    public int getVisitedId() {
+    public Integer getId() {
         return visitedId;
     }
 

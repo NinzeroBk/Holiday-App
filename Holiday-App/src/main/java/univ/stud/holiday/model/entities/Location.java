@@ -2,7 +2,7 @@ package univ.stud.holiday.model.entities;
 
 import org.jetbrains.annotations.NotNull;
 
-public final class Location {
+public final class Location implements Entity<Integer> {
     private int locationId;
     private final String city;
     private final int countryId;
@@ -29,7 +29,7 @@ public final class Location {
         return countryId;
     }
 
-    public int getLocationId() {
+    public Integer getId() {
         return locationId;
     }
 
