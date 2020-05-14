@@ -6,7 +6,7 @@ import univ.stud.holiday.model.entities.User;
 public interface UserDao extends BaseDao<User, String> {
     boolean isLoginValid(@NotNull String username, @NotNull String password);
 
-    boolean isUserValid(@NotNull String username);
+    boolean userExists(@NotNull String username);
 
     double totalCost(@NotNull String username);
 }

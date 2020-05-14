@@ -1,11 +1,8 @@
 package univ.stud.holiday.common;
 
-import java.util.Arrays;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public final class WebMapper {
 
@@ -15,7 +12,7 @@ public final class WebMapper {
 
     public static Map<String, String> of(String postMessage) {
         Map<String, String> map = new HashMap<>();
-        String[] pairs = postMessage.split("&");
+        String[] pairs = URLDecoder.decode(postMessage).split("&");
         for (String pair : pairs) {
             if (pair.contains("=")) {
                 String[] content = pair.split("=");

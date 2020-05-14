@@ -35,8 +35,8 @@ public final class HolidayRepository {
         throw new AssertionError();
     }
 
-    public static boolean isUserValid(String username) {
-        return MySqlDatabaseHoliday.getInstance().userDao().isUserValid(username);
+    public static boolean userExists(String username) {
+        return MySqlDatabaseHoliday.getInstance().userDao().userExists(username);
     }
 
     public static boolean isLoginValid(String username, String password) {
