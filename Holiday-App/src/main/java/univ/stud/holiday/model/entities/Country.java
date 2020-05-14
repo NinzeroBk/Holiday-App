@@ -2,7 +2,7 @@ package univ.stud.holiday.model.entities;
 
 import org.jetbrains.annotations.NotNull;
 
-public final class Country {
+public final class Country implements Entity<Integer> {
     public static final int NAME_MAX_LENGTH = 60;
 
     private int countryId;
@@ -22,7 +22,7 @@ public final class Country {
         this.countryId = countryId;
     }
 
-    public int getCountryId() {
+    public Integer getId() {
         return countryId;
     }
 

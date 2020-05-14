@@ -8,11 +8,11 @@ public interface BaseDao<Element, Key> {
 
     Element readElement(@NotNull Key primaryKey);
 
-    void deleteElement(@NotNull Key primaryKey);
+    boolean deleteElement(@NotNull Key primaryKey);
 
-    void updateElement(@NotNull Element element);
+    boolean updateElement(@NotNull Element element);
 
-    void createElement(@NotNull Element element);
+    boolean createElement(@NotNull Element element);
 
     List<Element> getElements();
 }

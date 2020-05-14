@@ -47,18 +47,20 @@ public class AttractionImpl extends DatabaseImpl<Attraction> implements Attracti
     }
 
     @Override
-    public void deleteElement(@NotNull Integer primaryKey) {
+    public boolean deleteElement(@NotNull Integer primaryKey) {
         String sql = "DELETE FROM attractions WHERE attractionId = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, primaryKey);
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void updateElement(@NotNull Attraction attraction) {
+    public boolean updateElement(@NotNull Attraction attraction) {
         String sql = "UPDATE attractions " +
                 "SET locationId = ?," +
                 "baseCost = ?," +
@@ -72,15 +74,17 @@ public class AttractionImpl extends DatabaseImpl<Attraction> implements Attracti
             preparedStatement.setString(3, attraction.getName());
             preparedStatement.setString(4, attraction.getDescription());
             preparedStatement.setInt(5, attraction.getYear());
-            preparedStatement.setInt(6, attraction.getAttractionId());
+            preparedStatement.setInt(6, attraction.getId());
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void createElement(@NotNull Attraction attraction) {
+    public boolean createElement(@NotNull Attraction attraction) {
         String sql = "INSERT INTO attractions(locationId, baseCost, name, description, year) VALUES(?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, attraction.getLocationId());
@@ -89,8 +93,10 @@ public class AttractionImpl extends DatabaseImpl<Attraction> implements Attracti
             preparedStatement.setString(4, attraction.getDescription());
             preparedStatement.setInt(5, attraction.getYear());
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 

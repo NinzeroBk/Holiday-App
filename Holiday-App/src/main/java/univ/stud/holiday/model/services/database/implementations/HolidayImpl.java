@@ -45,18 +45,20 @@ public class HolidayImpl extends DatabaseImpl<Holiday> implements HolidayDao {
     }
 
     @Override
-    public void deleteElement(@NotNull Integer primaryKey) {
+    public boolean deleteElement(@NotNull Integer primaryKey) {
         String sql = "DELETE FROM holidays WHERE holidayId = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, primaryKey);
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void updateElement(@NotNull Holiday holiday) {
+    public boolean updateElement(@NotNull Holiday holiday) {
         String sql = "UPDATE holidays " +
                 "SET username = ?," +
                 "title = ?," +
@@ -70,15 +72,17 @@ public class HolidayImpl extends DatabaseImpl<Holiday> implements HolidayDao {
             preparedStatement.setString(3, holiday.getDescription());
             preparedStatement.setDate(4, Date.valueOf(holiday.getStartDate()));
             preparedStatement.setDate(5, Date.valueOf(holiday.getEndDate()));
-            preparedStatement.setInt(6, holiday.getHolidayId());
+            preparedStatement.setInt(6, holiday.getId());
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void createElement(@NotNull Holiday holiday) {
+    public boolean createElement(@NotNull Holiday holiday) {
         String sql = "INSERT INTO holidays(title, " +
                 "username, " +
                 "description, " +
@@ -92,8 +96,10 @@ public class HolidayImpl extends DatabaseImpl<Holiday> implements HolidayDao {
             preparedStatement.setDate(4, Date.valueOf(holiday.getStartDate()));
             preparedStatement.setDate(5, Date.valueOf(holiday.getEndDate()));
             preparedStatement.execute();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 

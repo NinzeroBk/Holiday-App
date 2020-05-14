@@ -4,9 +4,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 
-public final class Review {
+public final class Review implements Entity<Integer> {
     public static final int TITLE_MAX_LENGTH = 25;
     public static final int CONTENT_MAX_LENGTH = 250;
+    public static final double RATING_MIN = 1.0;
+    public static final double RATING_MAX = 5.0;
 
     private String title;
     private double rating;
@@ -58,7 +60,7 @@ public final class Review {
     }
 
     public void setRating(double rating) {
-        if (rating < 1.0 || rating > 5.0) {
+        if (rating < RATING_MIN || rating > RATING_MAX) {
             throw new IllegalArgumentException("Rating cannot be lower than 1.0 or higher than 5.0");
         }
         this.rating = rating;
@@ -78,7 +80,7 @@ public final class Review {
         this.title = title;
     }
 
-    public int getReviewId() {
+    public Integer getId() {
         return reviewId;
     }
 

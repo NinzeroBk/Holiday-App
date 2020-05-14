@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 
-public final class Holiday {
+public final class Holiday implements Entity<Integer> {
     public static final int TITLE_MAX_LENGTH = 25;
     public static final int DESCRIPTION_MAX_LENGTH = 100;
 
@@ -98,7 +98,7 @@ public final class Holiday {
         this.startDate = startDate;
     }
 
-    public int getHolidayId() {
+    public Integer getId() {
         return holidayId;
     }
 

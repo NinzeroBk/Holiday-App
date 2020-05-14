@@ -44,18 +44,20 @@ public class CountryImpl extends DatabaseImpl<Country> implements CountryDao {
     }
 
     @Override
-    public void deleteElement(@NotNull Integer primaryKey) {
+    public boolean deleteElement(@NotNull Integer primaryKey) {
         String sql = "DELETE FROM countries WHERE countryId = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, primaryKey);
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void updateElement(@NotNull Country country) {
+    public boolean updateElement(@NotNull Country country) {
         String sql = "UPDATE countries " +
                 "SET regionId = ?," +
                 "name = ?" +
@@ -63,22 +65,26 @@ public class CountryImpl extends DatabaseImpl<Country> implements CountryDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, country.getRegionId());
             preparedStatement.setString(2, country.getName());
-            preparedStatement.setInt(3, country.getCountryId());
+            preparedStatement.setInt(3, country.getId());
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void createElement(@NotNull Country country) {
+    public boolean createElement(@NotNull Country country) {
         String sql = "INSERT INTO countries(regionId, name) VALUES(?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, country.getRegionId());
             preparedStatement.setString(2, country.getName());
             preparedStatement.execute();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 

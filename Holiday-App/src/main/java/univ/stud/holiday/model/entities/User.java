@@ -4,10 +4,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public final class User {
-    public static final int PASSWORD_LOWER_BOUND = 6;
-    public static final int PASSWORD_UPPER_BOUND = 20;
-    private static final Pattern emailPattern = Pattern.compile("^[^@]+@[^@]+\\.[^@]+$");
+public final class User implements Entity<String> {
+    public static final Pattern EMAIL_PATTERN = Pattern.compile("^[^@]+@[^@]+\\.[^@]+$");
+    public static final int PASS_MIN = 6;
+    public static final int PASS_MAX = 20;
 
     private final String emailAddress;
     private final String firstName;
@@ -25,7 +25,7 @@ public final class User {
             runtimeException.addSuppressed(illegalArgumentException);
         }
 
-        if (!emailPattern.matcher(emailAddress).matches()) {
+        if (!EMAIL_PATTERN.matcher(emailAddress).matches()) {
             runtimeException.addSuppressed(new IllegalArgumentException("Invalid email address format."));
         }
 
@@ -41,8 +41,8 @@ public final class User {
     }
 
     public void setPassword(@NotNull String password) {
-        if (password.length() < User.PASSWORD_LOWER_BOUND || password.length() > User.PASSWORD_UPPER_BOUND) {
-            throw new IllegalArgumentException("Password length must be between " + User.PASSWORD_LOWER_BOUND + " and " + User.PASSWORD_UPPER_BOUND + ".");
+        if (password.length() < User.PASS_MIN || password.length() > User.PASS_MAX) {
+            throw new IllegalArgumentException("Password length must be between " + User.PASS_MIN + " and " + User.PASS_MAX + ".");
         }
         this.password = password;
     }
@@ -51,7 +51,7 @@ public final class User {
         this.imageUrl = imageUrl;
     }
 
-    public String getUsername() {
+    public String getId() {
         return username;
     }
 
@@ -77,13 +77,6 @@ public final class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", emailAddress='" + emailAddress + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                '}';
+        return String.format("First Name: %s, Last Name: %s, Email Address: %s", firstName, lastName, emailAddress);
     }
 }

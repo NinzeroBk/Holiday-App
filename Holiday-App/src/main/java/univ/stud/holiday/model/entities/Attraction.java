@@ -2,7 +2,7 @@ package univ.stud.holiday.model.entities;
 
 import org.jetbrains.annotations.NotNull;
 
-public final class Attraction {
+public final class Attraction implements Entity<Integer> {
     private static final int NAME_MAX_LENGTH = 25;
     private static final int DESCRIPTION_MAX_LENGTH = 75;
 
@@ -48,7 +48,7 @@ public final class Attraction {
         this.attractionId = attractionId;
     }
 
-    public int getAttractionId() {
+    public Integer getId() {
         return attractionId;
     }
 
@@ -56,7 +56,7 @@ public final class Attraction {
         return description;
     }
 
-    public int getLocationId() {
+    public Integer getLocationId() {
         return locationId;
     }
 

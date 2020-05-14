@@ -93,7 +93,7 @@ CREATE TABLE `expenses` (
   KEY `visitedFK_idx` (`visitedId`),
   CONSTRAINT `visitedFK` FOREIGN KEY (`visitedId`) REFERENCES `visited` (`visitedId`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `expenses_chk_1` CHECK ((`price` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +102,7 @@ CREATE TABLE `expenses` (
 
 LOCK TABLES `expenses` WRITE;
 /*!40000 ALTER TABLE `expenses` DISABLE KEYS */;
-INSERT INTO `expenses` VALUES (4,14,55.49,'Chocolate cake'),(6,6,10,'Cola');
+INSERT INTO `expenses` VALUES (4,14,55.49,'Chocolate cake'),(9,22,20,'Branza'),(11,30,28.214,'Seeds'),(12,32,50,'OK'),(14,32,5.46,'Biscuits');
 /*!40000 ALTER TABLE `expenses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +126,7 @@ CREATE TABLE `holidays` (
   CONSTRAINT `chk_holiday_date` CHECK ((`startDate` <= `endDate`)),
   CONSTRAINT `holidays_chk_1` CHECK ((length(`title`) < 26)),
   CONSTRAINT `holidays_chk_2` CHECK ((length(`description`) < 101))
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +135,7 @@ CREATE TABLE `holidays` (
 
 LOCK TABLES `holidays` WRITE;
 /*!40000 ALTER TABLE `holidays` DISABLE KEYS */;
-INSERT INTO `holidays` VALUES (4,'TestUser','NewTitle','CoolDesc','2020-04-28','2020-04-28'),(5,'TestUser','Corona Holiday','I went to the sea side >:)','2019-04-28','2020-04-28');
+INSERT INTO `holidays` VALUES (4,'TestUser','NewTitle','CoolDesc hmm','2020-04-30','2023-04-28'),(13,'TestUser','FFFFFFFoook','lnlk','2014-01-28','2020-01-01'),(19,'TestUser','AmusingCool','DESCRIEREEE!!','2020-01-01','2021-01-01'),(21,'TestUser','Longest','Longest Holiday!!!','1974-01-01','2020-01-01'),(26,'penguin','School is over',NULL,'2021-01-01','2022-02-01'),(27,'penguin','Christmas','COOL','2025-02-01','2026-02-01');
 /*!40000 ALTER TABLE `holidays` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +209,7 @@ CREATE TABLE `resources` (
   KEY `visited_resources_FK_idx` (`visitedId`),
   CONSTRAINT `visited_resources_FK` FOREIGN KEY (`visitedId`) REFERENCES `visited` (`visitedId`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `resources_chk_1` CHECK ((length(`title`) < 26))
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,7 +218,7 @@ CREATE TABLE `resources` (
 
 LOCK TABLES `resources` WRITE;
 /*!40000 ALTER TABLE `resources` DISABLE KEYS */;
-INSERT INTO `resources` VALUES (3,14,'Foster\'s Home','https://www.fosters.com/house.jpg','2020-04-29 16:08:38');
+INSERT INTO `resources` VALUES (3,14,'Foster\'s Home','https://m.media-amazon.com/images/M/MV5BNjYyNGFjOTctYzFmNC00NzdmLThhMDgtNjEzZTRmNzA3ODc5XkEyXkFqcGdeQXVyNjk1Njg5NTA@._V1_UY1200_CR94,0,630,1200_AL_.jpg','2020-04-29 16:08:38'),(4,6,'Amazing','https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg','2020-05-08 12:48:05'),(6,30,'ASD','https://images.genius.com/6994a5b4220f6dcabbfa736da85f6b96.1000x1000x1.jpg','2020-01-01 00:00:00'),(7,32,'My Family','https://images.unsplash.com/photo-1551415923-a2297c7fda79?ixlib','2020-01-01 01:00:00'),(9,32,'My Dear Brother','https://www.azocleantech.com/images/Article_Images/ImageForArticle_1061_15837536188863190.png','2020-01-01 00:00:00');
 /*!40000 ALTER TABLE `resources` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +242,7 @@ CREATE TABLE `reviews` (
   CONSTRAINT `reviews_chk_1` CHECK ((length(`title`) < 26)),
   CONSTRAINT `reviews_chk_2` CHECK ((length(`content`) < 251)),
   CONSTRAINT `reviews_chk_3` CHECK ((`rating` between 1 and 5))
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,7 +251,7 @@ CREATE TABLE `reviews` (
 
 LOCK TABLES `reviews` WRITE;
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
-INSERT INTO `reviews` VALUES (2,6,'Awesome','I had a great time here!',4.9,'2020-04-29 15:40:31');
+INSERT INTO `reviews` VALUES (4,6,'sad','sad',2.5,'2020-01-01 00:00:00'),(5,22,'sad','dsa',2.5,'2020-01-01 00:00:00'),(13,21,'YAS','WOOOOOOOOOO',5,'2020-01-01 00:00:00'),(15,30,'Amazing!','I was wonderful',4.12,'2020-01-01 00:00:00'),(16,32,'It sucked!','Uncool',1,'2020-01-01 00:00:00'),(18,32,'asd','asd',2.51,'2020-01-01 01:00:00');
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,7 +282,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('student@cti.ro','RandomFirstName','RandomLastName','RandomUser',NULL,'RandomPassword'),('test@gmail.com','TestName','TestLastName','TestUser',NULL,'test123');
+INSERT INTO `users` VALUES ('sas@aa.co','asda','asdas','asd',NULL,'asdasad'),('asd@sad.asd','asd','asd','asdas',NULL,'asdasd'),('asd@ok.com','asd','asd','asdf',NULL,'asdaasd'),('asd@as.c','asdas','assd','asf',NULL,'asdasasd'),('sjfd@sk.c','h','hfdhsf','dadasd',NULL,'asfasfhasl'),('mypersonalemail@yahoo.com','Andrei','Borcescu','FusedBloxxer',NULL,'MyPassword'),('roblox@yahoo.com','Andrei','Mihael','legoblock222','https://pbs.twimg.com/profile_images/1313425515/Pikachu_and_Buneary_by_FanPikachu_400x400.png','123456'),('a@ok.com','a','a','ok',NULL,'andrei'),('penguin@penguin.penguin','penguin','penguin','penguin','https://upload.wikimedia.org/wikipedia/commons/0/08/South_Shetland-2016-Deception_Island%E2%80%93Chinstrap_penguin_%28Pygoscelis_antarctica%29_04.jpg','paasword'),('student@cti.ro','RandomFirstName','RandomLastName','RandomUser',NULL,'RandomPassword'),('test@gmail.com','TestName','TestLastName','TestUser','https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg','test123');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -305,7 +305,7 @@ CREATE TABLE `visited` (
   CONSTRAINT `attractionFK` FOREIGN KEY (`attractionId`) REFERENCES `attractions` (`attractionId`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `holidayFK` FOREIGN KEY (`holidayId`) REFERENCES `holidays` (`holidayId`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `chk_visited_date` CHECK ((`startDate` <= `endDate`))
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -314,7 +314,7 @@ CREATE TABLE `visited` (
 
 LOCK TABLES `visited` WRITE;
 /*!40000 ALTER TABLE `visited` DISABLE KEYS */;
-INSERT INTO `visited` VALUES (6,4,1,'2020-04-29 00:00:00','2020-07-28 00:00:00'),(14,4,1,'2020-04-29 00:00:00','2020-04-29 00:00:00'),(15,4,1,'2020-04-29 00:00:00','2020-04-29 00:00:00'),(16,4,1,'2020-04-29 00:00:00','2020-04-29 00:00:00'),(17,4,1,'2020-04-29 00:00:00','2020-04-29 00:00:00');
+INSERT INTO `visited` VALUES (6,4,4,'2020-04-29 00:00:00','2020-07-28 00:00:00'),(14,4,1,'2020-04-29 00:00:00','2020-04-29 00:00:00'),(15,4,1,'2020-04-29 00:00:00','2020-04-29 00:00:00'),(18,4,1,'2020-01-01 00:00:00','2020-01-01 00:00:00'),(20,19,1,'2020-01-01 00:01:00','2021-01-01 00:00:00'),(21,4,1,'2020-01-01 00:00:00','2021-01-01 01:00:00'),(22,4,1,'2020-01-02 00:00:00','2024-01-01 00:00:00'),(23,13,1,'2020-01-01 01:00:00','2020-01-01 02:00:00'),(30,21,4,'2020-01-01 00:00:00','2020-01-01 00:00:00'),(32,26,1,'2020-01-01 01:00:00','2020-01-01 12:00:00'),(34,26,2,'2020-01-01 00:00:00','2022-01-01 00:00:00'),(35,27,4,'2019-01-01 00:00:00','2020-01-01 00:00:00');
 /*!40000 ALTER TABLE `visited` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -327,4 +327,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-29 16:13:51
+-- Dump completed on 2020-05-10 14:07:24
