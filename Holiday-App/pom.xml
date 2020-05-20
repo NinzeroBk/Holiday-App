@@ -43,8 +43,6 @@
             <version>2.3.3</version>
             <scope>provided</scope>
         </dependency>
-<<<<<<< HEAD
-=======
 
         <!-- https://mvnrepository.com/artifact/jstl/jstl -->
         <dependency>
@@ -52,7 +50,6 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
->>>>>>> a57ef37a2a45259db7c24ab97fecb66e0acfce3b
     </dependencies>
 
     <build>

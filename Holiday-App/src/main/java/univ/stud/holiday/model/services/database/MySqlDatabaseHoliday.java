@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter, AutoCloseable {
+public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter {
 
     /**
      * DAOs
@@ -35,7 +35,6 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter, A
     private final Connection connection;
 
     private MySqlDatabaseHoliday() {
-        super();
         try {
             Class.forName(DATABASE_DRIVER);
             System.out.println(" Connecting to database... ");
@@ -47,10 +46,6 @@ public class MySqlDatabaseHoliday implements HolidayRepository.HolidayAdapter, A
         }
     }
 
-
-    @Override
-    public void close() throws Exception {
-    }
 
     private static class SingletonHelper {
         private static final MySqlDatabaseHoliday INSTANCE = new MySqlDatabaseHoliday();

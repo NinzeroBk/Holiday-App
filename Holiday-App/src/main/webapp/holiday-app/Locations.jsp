@@ -8,11 +8,14 @@
 <body>
 <h1 align="center">Locations</h1>
 <p align="center">
-    <%
+    <fieldset style="background-color: aquamarine">
+            <%
         List<Location> locations = MySqlDatabaseHoliday.getInstance().locationDao().getElements();
-        out.print(locations.toString());
-        out.newLine();
-    %>
+%><div style="text-align: center; background-color: aquamarine">
+            <% for(Location location: locations) { %>
+<p><%=location%> </p>
+<% } %>
+</fieldset>
 </p>
 </body>
 </html>

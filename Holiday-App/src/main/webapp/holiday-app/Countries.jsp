@@ -7,12 +7,13 @@
 </head>
 <body>
 <h1 align="center">Countries</h1>
-<p align="center">
-    <%
+    <fieldset style="background-color: aquamarine">
+        <%
         List<Country> countries = MySqlDatabaseHoliday.getInstance().countryDao().getElements();
-        out.newLine();
-        out.print(countries.toString());
-    %>
-</p>
+%><div style="text-align: center; background-color: aquamarine">
+        <% for(Country country: countries) { %>
+<p><%=country%> </p>
+<% } %>
+    </fieldset>
 </body>
 </html>

@@ -34,13 +34,10 @@ public final class HolidayRepository {
         throw new AssertionError();
     }
 
-<<<<<<< HEAD
-=======
     public static void createUser(User user) {
         MySqlDatabaseHoliday.getInstance().userDao().createElement(user);
     }
 
->>>>>>> a57ef37a2a45259db7c24ab97fecb66e0acfce3b
     public static boolean userExists(String username) {
         return MySqlDatabaseHoliday.getInstance().userDao().userExists(username);
     }

@@ -3,8 +3,8 @@ package univ.stud.holiday.model.entities;
 import org.jetbrains.annotations.NotNull;
 
 public final class Attraction implements Entity<Integer> {
-    private static final int NAME_MAX_LENGTH = 25;
-    private static final int DESCRIPTION_MAX_LENGTH = 75;
+    public static final int NAME_MAX_LENGTH = 25;
+    public static final int DESCRIPTION_MAX_LENGTH = 75;
 
     private final String description;
     private final double baseCost;

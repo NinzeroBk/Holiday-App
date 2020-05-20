@@ -1,6 +1,9 @@
 package univ.stud.holiday.common;
 
-<<<<<<< HEAD
+import univ.stud.holiday.model.entities.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,13 +15,8 @@ public final class WebMapper {
         throw new AssertionError();
     }
 
-<<<<<<< HEAD
-    public static Map<String, String> of(String postMessage) {
-        Map<String, String> map = new HashMap<>();
-=======
     public static Map<String, Object> of(String postMessage) {
         Map<String, Object> map = new HashMap<>();
->>>>>>> a57ef37a2a45259db7c24ab97fecb66e0acfce3b
         String[] pairs = URLDecoder.decode(postMessage).split("&");
         for (String pair : pairs) {
             if (pair.contains("=")) {
@@ -186,5 +184,36 @@ public final class WebMapper {
         objectMap.put("imageUrl", resource.getImageUrl());
         objectMap.put("timestamp", Converter.fromLocalDateTime(resource.getTimestamp()));
         return objectMap;
+    }
+
+    public static Map<String, Object> of(Attraction attraction) {
+        Map<String, Object> objectMap = new HashMap<>();
+        objectMap.put("attractionId", String.valueOf(attraction.getId()));
+        objectMap.put("description", attraction.getDescription());
+        objectMap.put("baseCost", String.valueOf(attraction.getBaseCost()));
+        objectMap.put("locationId", String.valueOf(attraction.getLocationId()));
+        objectMap.put("name", attraction.getName());
+        objectMap.put("year", String.valueOf(attraction.getYear()));
+        return objectMap;
+    }
+
+    public static Attraction toAttraction(Map<String, Object> objectMap) {
+        if(objectMap.get("attractionId") != null) {
+            return new Attraction(
+                    (int) objectMap.get("attractionId"),
+                    (String) objectMap.get("description"),
+                    Double.parseDouble((String) objectMap.get("baseCost")),
+                    Integer.parseInt((String) objectMap.get("locationId")),
+                    (String) objectMap.get("name"),
+                    Integer.parseInt((String) objectMap.get("year"))
+            );
+        }
+        return new Attraction(
+                (String) objectMap.get("description"),
+                Double.parseDouble((String) objectMap.get("baseCost")),
+                Integer.parseInt((String) objectMap.get("locationId")),
+                (String) objectMap.get("name"),
+                Integer.parseInt((String) objectMap.get("year"))
+        );
     }
 }

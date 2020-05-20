@@ -11,11 +11,15 @@
 <body>
 <h1 align="center">Regions</h1>
 <p align="center">
-    <%
+    <fieldset style="background-color: aquamarine">
+            <%
         List<Region> regions = MySqlDatabaseHoliday.getInstance().regionDao().getElements();
-        out.newLine();
-        out.print(regions.toString());
-    %>
+%><div style="text-align: center; background-color: aquamarine">
+            <% for(Region region: regions) { %>
+<p><%=region%> </p>
+<% } %>
+</fieldset>
+</div>
 </p>
 </body>
 </html>
